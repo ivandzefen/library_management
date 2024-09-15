@@ -1,0 +1,82 @@
+classDiagram
+    class Book {
+        -book_id: str
+        -title: str
+        -author: str
+        -year: int
+        -publisher: str
+        -num_copies: int
+        -publication_date: datetime
+        -available_copies: int
+        +__init__(title: str, author: str, year: int, publisher: str, num_copies: int, publication_date: datetime)
+        -_generate_book_id(): str
+        +set_title(title: str)
+        +set_author(author: str)
+        +set_year(year: int)
+        +set_publisher(publisher: str)
+        +set_num_copies(num_copies: int)
+        +set_publication_date(publication_date: datetime)
+        +get_title(): str
+        +get_author(): str
+        +get_year(): int
+        +get_publisher(): str
+        +get_num_copies(): int
+        +get_available_copies(): int
+        +get_publication_date(): datetime
+    }
+
+    class BookList {
+        -books: dict
+        +__init__()
+        +add_book(book: Book)
+        +search_book(query: str, search_type: str): list
+        +remove_book(title: str): bool
+        +get_total_books(): int
+    }
+
+    class User {
+        -username: str
+        -firstname: str
+        -surname: str
+        -house_number: str
+        -street_name: str
+        -postcode: str
+        -email: str
+        -date_of_birth: datetime
+        +__init__(username: str, firstname: str, surname: str, house_number: str, street_name: str, postcode: str, email: str, date_of_birth: datetime)
+        +get_username(): str
+        +get_firstname(): str
+        +get_surname(): str
+        +get_house_number(): str
+        +get_street_name(): str
+        +get_postcode(): str
+        +get_email(): str
+        +get_date_of_birth(): datetime
+        +set_firstname(firstname: str)
+        +set_surname(surname: str)
+        +set_email(email: str)
+        +set_date_of_birth(date_of_birth: datetime)
+    }
+
+    class UserList {
+        -users: dict
+        +__init__()
+        +add_user(user: User)
+        +remove_user(firstname: str)
+        +get_user_count(): int
+        +get_user_by_username(username: str): User
+    }
+
+    class Loans {
+        -loans: dict
+        +__init__()
+        +borrow_book(user: User, book: Book, days: int)
+        +return_book(user: User, book: Book)
+        +get_user_loan_count(user: User): int
+        +get_overdue_books(user_list: UserList): list
+    }
+
+    BookList "1" --* "*" Book
+    UserList "1" --* "*" User
+    Loans "1" --> "*" Book
+    Loans "1" --> "*" User
